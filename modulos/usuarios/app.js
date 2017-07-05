@@ -31,12 +31,16 @@ app.controller('usuariosCtrl', function($scope, $http) {
 	 * Guarda un objeto usuario
 	 * */
 	$scope.guardarUsuario = function(){
-		console.log($scope.usuario);
-		alert($scope.usuario);
-		$http.post("api.php",$scope.usuario)
-			.then(function(response) {
-				alert(response.data);
-				console.log(response.data);
-			});
+		$http({
+	        url: 'api.php',
+	        method: "POST",
+	        data: $scope.usuario
+	    }).then(function(response) {
+	       alert(response.status);
+	       console.log(response);
+	    },function(error) { // optional
+	       alert("Ocurrio un error");
+	       console.log("ERROR:",error)
+	    });
 	};
 });
