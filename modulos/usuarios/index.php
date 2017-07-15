@@ -18,7 +18,7 @@
 		<p/>
 		<table class="table">
 			<tr>
-				<th>ID</th><th>NOMBRE</th><th>CI</th><th>CEL</th><th>USUARIO</th><th>PASS</th><th>TIPO</th>
+				<th>ID</th><th>NOMBRE</th><th>CI</th><th>CEL</th><th>USUARIO</th><th>PASS</th><th>TIPO</th><th></th>
 			</tr>
 			<tr data-ng-repeat="usuario in usuarios">
 			    <td>{{ usuario.id }}</td>
@@ -28,6 +28,10 @@
 				<td>{{ usuario.usuario }}</td>
 				<td>****</td>
 				<td>{{ usuario.tipo }}</td>
+				<td>
+					<button type="button" class="btn btn-warning btn-xs" data-ng-click="editarUsuario(usuario.id)">Editar</button>
+					<button type="button" class="btn btn-danger btn-xs" data-ng-click="eliminarUsuario(usuario)">Eliminar</button>
+				</td>
 			</tr>
 		</table>
 		
