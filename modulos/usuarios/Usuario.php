@@ -38,7 +38,7 @@ class Usuario{
 		}else{// actualizar
 			$sql="update ".self::TABLA." set NOMBRE='".$this->nombre."',CI='".$this->ci."',CEL='".$this->cel."',USUARIO='".$this->usuario."',PASS='".$this->pass."',TIPO='".$this->tipo."' where ID='".$this->id."'";
 		}
-		if($result=mysqli_query($this->conexion,$sql)){
+		if(mysqli_query($this->conexion,$sql)){
 			if($this->id==-1){
 				// nuevo
 				$sql="select max(id) from ".self::TABLA;
@@ -48,6 +48,16 @@ class Usuario{
 			}
 			return self::getUsuarioDeId($this->id);
 		}
+		return null;
+	}
+	
+	/**
+	 * Metodo que elimina un registro en la base de datos
+	 * retorna un objeto creado
+	 * */
+	public function eliminar(){
+		$sql="delete from ".self::TABLA." where ID='".$this->id."'";
+		mysqli_query($this->conexion,$sql);
 		return null;
 	}
 	
