@@ -1,17 +1,27 @@
 <?php
-require 'Usuario.php';
+require_once("../../conexion.php");
+require_once '../../lib/rb.php';
+R::setup('mysql:host=localhost;dbname='.DB_NAME,DB_USER,DB_PASS);
+const TABLA="transaccion";
+
+// aca se define este api
 
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
+header("Content-Type: application/json; charset=UTF-8");
 
 switch ($method) {
 	case 'GET':
 		$data = json_decode(file_get_contents('php://input'), true);
 		if (isset($_GET["id"])){
-			$usuario=Usuario::getUsuarioDeId($_GET["id"]);
-			print json_encode($usuario);
+			$comprobante=Comprobante::getPorId($_GET["id"]);
+			print json_encode($comprobante);
 		}else{
-			print json_encode(Usuario::lista());
+			$cuentas = R::findAll('cuentas');
+			$result["cuentas"]=$cuentas;
+			$result["tipos_transaccion"]=R::findAll('tipo_trans');
+			//print_r($comprobantes);
+			print json_encode($result);
 		}
 		break;
 	case 'POST':

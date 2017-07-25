@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Modulo Facturas v1.0</title>
+<link href="../../css/bootstrap.min.css" rel="stylesheet">
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/bootstrap.min.js"></script>
+<script src="../../js/angular.min.js"></script>
+<script src="app.js"></script>
+</head>
+<body>
+	<h1>Factura</h1>
+	<div class="container" data-ng-app="cuentaApp"
+		data-ng-controller="cuentaCtrl">
+		<form class="form-horizontal">
+			
+			
+			
+			<div class="panel panel-default">
+			<div class="form-group">
+				<label class="control-label col-sm-1" for="nfactura">Nº:</label>
+				<div class="col-sm-1">
+					<input type="text" class="form-control" id="nfcatura"
+						placeholder="1">
+				</div>
+				<label class="control-label col-sm-2" for="fecha">FECHA:</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="fecha"
+						placeholder="YYYY-MM-DD">
+				</div>
+				<a>    </a>
+				<div class="form-group">
+				<label class="control-label col-sm-2" for="nit">NIT:</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="nit"
+						placeholder="Introduzca el Nit del cliente">
+				</div>
+				<label class="control-label col-sm-2" for="nombre">NOMBRE:</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="nombre"
+						placeholder="Nombre del cliente">
+				</div>
+				<label class="control-label col-sm-2" for="fecha">FECHA:</label>
+				<div class="col-sm-2">
+					<input type="text" class="form-control" id="fecha"
+						placeholder="YYYY-MM-DD">
+				</div>
+			</div>
+				<div class="panel-heading">Detalle de la factura</div>
+				<div class="panel-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th>Producto</th>
+								<th>Cantidad</th>
+								<th>Precio Unitario</th>
+								<th>Sub Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<div class="form-group col-sm-10">
+										<select class="form-control" id="sel1">
+											<option></option>
+											<option>Producto 1</option>
+											<option>Producto 2</option>
+											<option>Producto 3</option>
+											<option>Producto 4</option>
+										</select>
+									</div>
+								</td>
+								<td>Doe</td>
+								<td>john@example.com</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+		</form>
+
+	</div>
+</body>
+</html>
