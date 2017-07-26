@@ -65,7 +65,7 @@
 								<div class="form-group col-sm-10">
 									<select class="form-control" id="sel1">
 										<option selected></option>
-										<option ng-repeat="cuenta in cuentas" value="{{cuenta.id}}">{{cuenta.CODIGO}}</option>
+										<option ng-repeat="cuenta in cuentas" value="{{cuenta.id}}">{{cuenta.codigo}}</option>
 									</select>
 								</div>
 							</td>
@@ -101,8 +101,8 @@ app.controller('comprobantesCtrl', function($scope, $http) {
 	};
 
 	$scope.cargarDatos();
-	
-	
+
+
 
 	$scope.comprobante={fecha: new Date()};
 

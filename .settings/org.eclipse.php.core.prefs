@@ -1,2 +1,4 @@
 eclipse.preferences.version=1
 include_path=0;/sistema_contable_ivan
+phpVersion=php7.1
+useShortTags=true
