@@ -8,9 +8,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Modulo Comprobantes v1.0</title>
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
+<link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet">
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/angular.min.js"></script>
+<script src="app.js"></script>
+
+
+  <script src="../../js/moment.min.js"></script>
+  <script src="../../js/bootstrap-datetimepicker.min.js"></script>
 </head>
 <body>
 	<h1>Comprobante</h1>
@@ -36,10 +42,13 @@
 					</select>
 				</div>
 				<label class="control-label col-sm-2" for="fecha_c">FECHA:</label>
-				<div class="col-sm-2">
-					<input type="text" class="form-control" id="fecha_c"
-						placeholder="YYYY-MM-DD" ng-model="comprobante.fecha">
-				</div>
+				<div class='input-group date' id='datetimepicker'>
+                    <input type="text" class="form-control"
+						placeholder="DD/MM/YYY" ng-model="comprobante.fecha">
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-1" for="glosa">Glosa:</label>
@@ -89,91 +98,12 @@
 			</div>
 		</form>
 	</div>
-<script>
-var app = angular.module('comprobantesApp', []);
-app.controller('comprobantesCtrl', function($scope, $http) {
-
-	$scope.cargarDatos = function() {
-		$http.get("api.php").then(function(response) {
-			$scope.cuentas = response.data.cuentas;
-			$scope.tipos_transaccion = response.data.tipos_transaccion;
-		});
-	};
-
-	$scope.cargarDatos();
-
-
-
-	$scope.comprobante={fecha: new Date()};
-
-	/**
-	 * Crear un nuevo objeto usuario
-	 */
-	$scope.nuevoUsuario = function() {
-		$scope.tituloModal = "Nuevo usuario";
-		$scope.usuario = {
-			id : -1
-		};
-	};
-	/**
-	 * Se prepara el usuario para editar
-	 */
-	$scope.editarUsuario = function(idUsuario) {
-		$scope.tituloModal = "Editar usuario";
-		$http({
-			url : 'api.php?id=' + idUsuario,
-			method : "GET",
-		}).then(function(response) {
-			$scope.usuario = response.data;
-			$('#editarUsuarioModal').modal('toggle');
-		});
-	};
-	/**
-	 * Guarda un objeto usuario
-	 */
-	$scope.guardarUsuario = function() {
-		$http({
-			url : 'api.php',
-			method : $scope.usuario.id == -1 ? "POST" : "PUT",
-			data : $scope.usuario
-		}).then(function(response) {
-			// alert(response.status);
-			// console.log(response);
-			if (response.status === 201 || response.status === 200) {
-				$('#editarUsuarioModal').modal('toggle');
-				$scope.cargarUsuarios();
-			} else {
-				alert("Ocurrio un error");
-				console.log(response.data);
-			}
-		}, function(error) { // optional
-			alert("Ocurrio un error");
-			console.log("ERROR:", error)
-		});
-	};
-
-	/**
-	 * Eliminar Usuario
-	 */
-	$scope.eliminarUsuario = function(usuario) {
-		//console.log(usuario);
-		if (confirm("Esta seguro de eliminar al usuario: "+usuario.nombre)) {
-			$http({
-				url : 'api.php',
-				method : "DELETE",
-				data : {
-					"id" : usuario.id
-				}
-			}).then(function(response) {
-				$scope.cargarUsuarios();
-			}, function(error) { // optional
-				alert("Ocurrio un error");
-				console.log("ERROR:", error)
-			});
-		}
-	};
-});
-
-</script>
+	<script>
+	$(function () {
+        $('#datetimepicker').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });;
+    });
+	</script>
 </body>
 </html>

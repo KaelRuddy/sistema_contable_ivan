@@ -1,24 +1,18 @@
-var app = angular.module('usuariosApp', []);
-app.controller('usuariosCtrl', function($scope, $http) {
+var app = angular.module('comprobantesApp', []);
+app.controller('comprobantesCtrl', function($scope, $http) {
 
-	$scope.cargarUsuarios = function() {
+	$scope.cargarDatos = function() {
 		$http.get("api.php").then(function(response) {
-			$scope.usuarios = response.data;
+			$scope.cuentas = response.data.cuentas;
+			$scope.tipos_transaccion = response.data.tipos_transaccion;
 		});
 	};
 
-	$scope.cargarUsuarios();
+	$scope.cargarDatos();
 
-	$scope.tipos = [ {
-		"id" : 1,
-		"nombre" : "Administrador"
-	}, {
-		"id" : 2,
-		"nombre" : "Contador"
-	}, {
-		"id" : 3,
-		"nombre" : "Usuario"
-	} ];
+
+
+	//$scope.comprobante={fecha: new Date()};
 
 	/**
 	 * Crear un nuevo objeto usuario
