@@ -15,8 +15,8 @@
 <script src="app.js"></script>
 
 
-  <script src="../../js/moment.min.js"></script>
-  <script src="../../js/bootstrap-datetimepicker.min.js"></script>
+<script src="../../js/moment.min.js"></script>
+<script src="../../js/bootstrap-datetimepicker.min.js"></script>
 </head>
 <body>
 	<h1>Comprobante</h1>
@@ -24,31 +24,31 @@
 		data-ng-controller="comprobantesCtrl">
 		<form class="form-horizontal">
 			<div class="form-group">
-				<label class="control-label col-sm-1" for="ncomprobante">No.:</label>
+				<label class="control-label col-sm-1" for="ncomprobante">No.:
+				</label>
 				<div class="col-sm-1">
-					<input type="text" class="form-control" id="ncomprobante"
-						placeholder="1">
+					<span>{{comprobante.nro_comprobante}}</span>
 				</div>
 				<label class="control-label col-sm-1" for="ntc">No. Tipo:</label>
 				<div class="col-sm-1">
-					<input type="text" class="form-control" id="1" placeholder="1">
+					<span>{{comprobante.nro_tipo_comprobante}}</span>
 				</div>
 				<label class="control-label col-sm-2" for="tipo_c">Comprobante
 					de:</label>
 				<div class="form-group col-sm-2">
-					<select class="form-control" id="tipo_c">
+					<select class="form-control" id="tipo_c" data-ng-change="actualizarNroTipoComprobante()" data-ng-model="comprobante.fk_tipo_transaccion">
 						<option selected></option>
 						<option ng-repeat="tipo in tipos_transaccion" value="{{tipo.id}}">{{tipo.tipo_transaccion}}</option>
 					</select>
 				</div>
 				<label class="control-label col-sm-2" for="fecha_c">FECHA:</label>
 				<div class='input-group date' id='datetimepicker'>
-                    <input type="text" class="form-control"
-						placeholder="DD/MM/YYY" ng-model="comprobante.fecha">
-                    <span class="input-group-addon">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
+					<input type="text" class="form-control" placeholder="DD/MM/YYY"
+						ng-model="comprobante.fecha"> <span
+						class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-1" for="glosa">Glosa:</label>
@@ -99,11 +99,12 @@
 		</form>
 	</div>
 	<script>
-	$(function () {
-        $('#datetimepicker').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });;
-    });
+		$(function() {
+			$('#datetimepicker').datetimepicker({
+				format : 'DD/MM/YYYY'
+			});
+			;
+		});
 	</script>
 </body>
 </html>

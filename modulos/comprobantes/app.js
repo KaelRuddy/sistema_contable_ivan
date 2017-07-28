@@ -1,16 +1,28 @@
 var app = angular.module('comprobantesApp', []);
 app.controller('comprobantesCtrl', function($scope, $http) {
+	$scope.comprobante={
+		nro_comprobante:null,
+		nro_tipo_comprobante:null
+	};
 
 	$scope.cargarDatos = function() {
 		$http.get("api.php").then(function(response) {
 			$scope.cuentas = response.data.cuentas;
 			$scope.tipos_transaccion = response.data.tipos_transaccion;
+			$scope.comprobante.nro_comprobante = response.data.sig_nro_comprobante;
 		});
 	};
 
 	$scope.cargarDatos();
 
-
+	/**
+	 * fucncion para actualizar
+	 * */
+	$scope.actualizarNroTipoComprobante = function(){
+		$http.get("api.php?sig_nro_tipo_comprobante="+$scope.comprobante.fk_tipo_transaccion).then(function(response) {
+			$scope.comprobante.nro_tipo_comprobante = response.data.sig_nro_tipo_comprobante;
+		});
+	};
 
 	//$scope.comprobante={fecha: new Date()};
 
