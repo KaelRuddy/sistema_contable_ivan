@@ -27,6 +27,7 @@ switch ($method) {
 			$result["cuentas"]=$cuentas;
 			$result["tipos_transaccion"]=R::findAll(T_tipos_transaccion);
 			$result["sig_nro_comprobante"]=R::getCell('SELECT max(nro_comprobante) FROM '.T_transacciones)+1;
+			$result["transacciones"]=R::findAll(T_transacciones);
 		}
 		print json_encode($result);
 		break;

@@ -1,9 +1,13 @@
-var app = angular.module('comprobantesApp', []);
-app.controller('comprobantesCtrl', function($scope, $http) {
-	$scope.comprobante={
-		nro_comprobante:null,
-		nro_tipo_comprobante:null
-	};
+var app = angular.module('transaccionesApp', []);
+app.controller('transaccionesCtrl', function($scope, $http) {
+
+	$scope.cargarTransacciones = function(response){
+		$http.get("api.php").then(function(response) {
+			$scope.transacciones = response.data.transacciones;
+		});
+	}
+
+	$scope.cargarTransacciones();
 
 	$scope.cargarDatos = function() {
 		$http.get("api.php").then(function(response) {
@@ -13,7 +17,7 @@ app.controller('comprobantesCtrl', function($scope, $http) {
 		});
 	};
 
-	$scope.cargarDatos();
+	//$scope.cargarDatos();
 
 	/**
 	 * fucncion para actualizar
@@ -27,14 +31,68 @@ app.controller('comprobantesCtrl', function($scope, $http) {
 	//$scope.comprobante={fecha: new Date()};
 
 	/**
-	 * Crear un nuevo objeto usuario
+	 * Crear un nuevo objeto transaccion
 	 */
-	$scope.nuevoUsuario = function() {
-		$scope.tituloModal = "Nuevo usuario";
-		$scope.usuario = {
-			id : -1
-		};
+	$scope.nuevaTransaccion = function() {
+		$scope.transaccion={
+				id : -1,
+				nro_comprobante:null,
+				nro_tipo_comprobante:null,
+				operaciones:[]
+			};
+		$scope.operacion={
+				id:Math.random(),
+				debe:0.0,
+				haber:0.0
+			};
+		$scope.tituloModal = "Nueva Transacción";
+		$http.get("api.php").then(function(response) {
+			$scope.cuentas = response.data.cuentas;
+			$scope.tipos_transaccion = response.data.tipos_transaccion;
+			$scope.transaccion.nro_comprobante = response.data.sig_nro_comprobante;
+			$scope.sumarDebeHaber();
+			$('#editarTransaccionModal').modal('toggle');
+		});
+
 	};
+
+	$scope.sumarDebeHaber=function(){
+		$scope.sumaDebe=0.0;
+		$scope.sumaHaber=0.0;
+		for(var i=0;i<$scope.transaccion.operaciones.length;i++){
+			$scope.sumaDebe+=parseFloat($scope.transaccion.operaciones[i].debe);
+			$scope.sumaHaber+=parseFloat($scope.transaccion.operaciones[i].haber);
+		}
+	};
+
+	/**
+	 * adiciona una operacion temporal a la transaccion
+	 */
+	$scope.adicionarOperacion = function(operacion) {
+		$scope.transaccion.operaciones.push(operacion);
+		$scope.operacion={
+				id:Math.random(),
+				debe:0.0,
+				haber:0.0
+			};
+		$scope.sumarDebeHaber();
+	};
+
+	/**
+	 * eliminar una operacion temporal a la transaccion
+	 */
+	$scope.eliminarOperacion = function(operacion) {
+		var vecOpe=[];
+		for(var i=0;i<$scope.transaccion.operaciones.length;i++){
+			if($scope.transaccion.operaciones[i].id!==operacion.id){
+				vecOpe.push($scope.transaccion.operaciones[i]);
+			}
+		}
+		$scope.transaccion.operaciones=vecOpe;
+		$scope.sumarDebeHaber();
+	};
+
+
 	/**
 	 * Se prepara el usuario para editar
 	 */
