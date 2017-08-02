@@ -8,15 +8,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Modulo Comprobantes v1.0</title>
 <link href="../../css/bootstrap.min.css" rel="stylesheet">
-<link href="../../css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<!-- <link rel="stylesheet" href="../../css/bootstrap.css"> -->
+<link rel="stylesheet" href="../../css/datetimepicker.css"/>
+
 <script src="../../js/jquery.min.js"></script>
 <script src="../../js/bootstrap.min.js"></script>
 <script src="../../js/angular.min.js"></script>
-<script src="app.js"></script>
-
 
 <script src="../../js/moment.min.js"></script>
-<script src="../../js/bootstrap-datetimepicker.min.js"></script>
+<!-- <script type="text/javascript" src="../../js/moment.js"></script> -->
+<!-- <script type="text/javascript" src="../../js/angular.js"></script> -->
+<!-- <script type="text/javascript" src="../../js/datetimepicker.js"></script> -->
+<!-- <script type="text/javascript" src="../../js/datetimepicker.templates.js"></script> -->
+<script type="text/javascript" src="../../js/angular-animate.min.js"></script>
+<script type="text/javascript" src="../../js/angular-touch.min.js"></script>
+<script type="text/javascript" src="../../js/ui-bootstrap-tpls.min.js"></script>
+<script src="app.js"></script>
 </head>
 <body>
 	<div class="container" data-ng-app="transaccionesApp" data-ng-controller="transaccionesCtrl">
@@ -40,6 +47,7 @@
 				</td>
 			</tr>
 		</table>
+
 		<!-- Modal Editar Comprobante-->
 		 <div id="editarTransaccionModal" class="modal fade" role="dialog">
 		  <div class="modal-dialog modal-lg">
@@ -66,19 +74,27 @@
 						<label class="control-label col-sm-2" for="tipo_c">Comprobante
 							de:</label>
 						<div class="form-group col-sm-2">
-							<select class="form-control" id="tipo_c" data-ng-change="actualizarNroTipoComprobante()" data-ng-model="comprobante.fk_tipo_transaccion">
+							<select class="form-control" id="tipo_c" data-ng-change="actualizarNroTipoComprobante()" data-ng-model="transaccion.fk_tipo_transaccion">
 								<option selected></option>
-								<option ng-repeat="tipo in tipos_transaccion" value="{{tipo.id}}">{{tipo.tipo_transaccion}}</option>
+								<option data-ng-repeat="tipo in tipos_transaccion" value="{{tipo.id}}">{{tipo.tipo_transaccion}}</option>
 							</select>
 						</div>
 						<label class="control-label col-sm-2" for="fecha_c">FECHA:</label>
-						<div class='input-group date' id='datetimepicker'>
-							<input type="text" class="form-control" placeholder="DD/MM/YYY"
-								data-ng-model="comprobante.fecha"> <span
-								class="input-group-addon"> <span
-								class="glyphicon glyphicon-calendar"></span>
-							</span>
-						</div>
+						<div class="form-group col-sm-2">
+						        <p class="input-group">
+						          <input type="text" class="form-control" uib-datepicker-popup="dd/MM/yyyy" ng-model="transaccion.fecha" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+						          <span class="input-group-btn">
+						            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+						          </span>
+						        </p>
+						  </div>
+<!-- 						<div class='input-group date' id='datetimepicker'> -->
+<!-- 							<input type="text" class="form-control" placeholder="DD/MM/YYY" -->
+<!-- 								data-ng-model="transaccion.fecha"> <span -->
+<!-- 								class="input-group-addon"> <span -->
+<!-- 								class="glyphicon glyphicon-calendar"></span> -->
+<!-- 							</span> -->
+<!-- 						</div> -->
 					</div>
 					<div class="form-group">
 						<label class="control-label col-sm-1" for="glosa">Glosa:</label>
@@ -87,8 +103,8 @@
 								placeholder="Glosa del asiento">
 						</div>
 					</div>
-					<div class="panel-heading">Detalle del comprobante</div>
-					<div class="panel-body">
+					<div class="modal-heading">Detalle del comprobante</div>
+					<div class="modal-body">
 						<table class="table table-bordered">
 							<thead>
 								<tr>
@@ -134,17 +150,23 @@
 							</tbody>
 						</table>
 					</div>
+					<div class="modal-footer">
+			  	<button type="submit" class="btn btn-success" data-ng-click="guardarTransaccion()">Guardar</button>
+				<button type="button" class="btn btn-info" data-dismiss="modal">Cancelar</button>
+			  </div>
 				</form>
 			</div>
+		</div>
 	</div>
-
+</div>
+</div>
 	<script>
-		$(function() {
-			$('#datetimepicker').datetimepicker({
-				format : 'DD/MM/YYYY'
-			});
-			;
-		});
+// 		$(function() {
+// 			$('#datetimepicker').datetimepicker({
+// 				format : 'DD/MM/YYYY'
+// 			});
+// 			;
+// 		});
 	</script>
 </body>
 </html>

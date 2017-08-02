@@ -5,6 +5,7 @@ R::setup('mysql:host=localhost;dbname='.DB_NAME,DB_USER,DB_PASS);
 const T_transacciones="transacciones";
 const T_tipos_transaccion="tipo_trans";
 const T_cuentas="cuentas";
+const T_operaciones="operaciones";
 
 // aca se define este api
 
@@ -33,21 +34,34 @@ switch ($method) {
 		break;
 	case 'POST':
 		// guardar
-		$data = json_decode(file_get_contents('php://input'), true);
-		$usuario=new Usuario();
-		$usuario->nombre=$data["nombre"];
-		$usuario->ci=$data["ci"];
-		$usuario->cel=$data["cel"];
-		$usuario->usuario=$data["usuario"];
-		$usuario->pass=$data["password"];
-		if ($usuario->guardar()){
+		try{
+			$data = json_decode(file_get_contents('php://input'), true);
+			$transaccion=R::dispense(T_transacciones);
+			$transaccion->nro_comprobante=$data["nro_comprobante"];
+			$transaccion->nro_tipo_comprobante=$data["nro_tipo_comprobante"];
+			$transaccion->fk_tipo_transaccion=$data["fk_tipo_transaccion"];
+			$transaccion->fecha=$data["fecha"];
+			$id_transaccion=R::store($transaccion);
+			$operaciones=$data["operaciones"];
+			foreach ($operaciones as $ope){
+				$operacion=R::dispense(T_operaciones);
+				$operacion->fk_cuenta=$ope["fk_cuenta"];
+				$operacion->descripcion=$ope["descripcion"];
+				$operacion->debe=$ope["debe"];
+				$operacion->haber=$ope["haber"];
+				$operacion->fk_transaccion=$id_transaccion;
+				$id=R::store($operacion);
+			}
 			http_response_code(201);
-			print json_encode($usuario);
-		}else{
+			$transaccion=R::load(T_transacciones,$id_transaccion);
+			$transaccion->operaciones=R::find( T_operaciones, ' fk_transaccion = ? ', [ $id_transaccion ] );
+			$respuesta["transaccion"]=$transaccion;
+		} catch (Exception $e) {
 			http_response_code(405);
-			$respuesta=array();
 			$respuesta["codigo"]=405;
-			$respuesta["mensaje"]="No se pudo guardar el usuario";
+			$respuesta["mensaje"]="No se pudo guardar la transaccion";
+			$respuesta["error"]=$e;
+		}finally{
 			print json_encode($respuesta);
 		}
 		break;
