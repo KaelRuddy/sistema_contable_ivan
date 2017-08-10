@@ -23,6 +23,18 @@ app
 										});
 					};
 
+					/**
+					 * Muestra una transacción
+					 * */
+					$scope.mostrarTransaccion = function(transaccion){
+						$http.get("api.php?transaccion="+transaccion.id).then(function(response) {
+							$scope.transaccion = response.data.transaccion;
+							$scope.tituloModal = "Transacción "+transaccion.nro_comprobante;
+							$scope.sumarDebeHaber();
+							$('#mostrarTransaccionModal').modal('toggle');
+						});
+					}
+
 					// $scope.cargarDatos();
 
 					/**
@@ -178,8 +190,8 @@ app
 						}
 					};
 					$scope.popup1 = {
-						    opened: false
-						  };
+						opened : false
+					};
 					$scope.open1 = function() {
 						$scope.popup1.opened = true;
 					};
