@@ -149,6 +149,10 @@
 															value="{{cuenta.id}}">{{cuenta.codigo}}</option>
 													</select>
 												</div>
+												<h4>Static arrays</h4> <pre>Model: {{selected | json}}</pre>
+												<input type="text" ng-model="selected"
+												uib-typeahead="cuenta.nombre_cta for cuenta in cuentas | filter:$viewValue | limitTo:8"
+												class="form-control">
 											</td>
 											<td><input type="text"
 												data-ng-model="operacion.descripcion" /></td>
