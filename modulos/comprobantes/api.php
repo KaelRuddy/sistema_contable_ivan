@@ -58,13 +58,14 @@ switch ($method) {
 			$transaccion->nro_comprobante=$data["nro_comprobante"];
 			$transaccion->nro_tipo_comprobante=$data["nro_tipo_comprobante"];
 			$transaccion->fk_tipo_transaccion=$data["fk_tipo_transaccion"];
+			$transaccion->glosa=$data["glosa"];
 			$transaccion->fecha=$data["fecha"];
 			$id_transaccion=R::store($transaccion);
 			$operaciones=$data["operaciones"];
 			foreach ($operaciones as $ope){
 				$operacion=R::dispense(T_operaciones);
-				$operacion->fk_cuenta=$ope["fk_cuenta"];
-				$operacion->descripcion=$ope["descripcion"];
+				$operacion->fk_cuenta=$ope["cuenta"]["id"];
+				//$operacion->descripcion=$ope["descripcion"];
 				$operacion->debe=$ope["debe"];
 				$operacion->haber=$ope["haber"];
 				$operacion->fk_transaccion=$id_transaccion;

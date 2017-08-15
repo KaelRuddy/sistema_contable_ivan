@@ -58,16 +58,16 @@ app
 					 */
 					$scope.nuevaTransaccion = function() {
 						$scope.transaccion = {
-							id : -1,
+							id : null,
 							nro_comprobante : null,
 							nro_tipo_comprobante : null,
 							operaciones : []
 						};
 						$scope.operacion = {
-							id : -Math.random(),
+							id :null,
 							debe : 0.0,
 							haber : 0.0,
-							descripcion : ""
+							cuenta : null
 						};
 						$scope.tituloModal = "Nueva Transacción";
 						$http
@@ -97,12 +97,15 @@ app
 					 * adiciona una operacion temporal a la transaccion
 					 */
 					$scope.adicionarOperacion = function(operacion) {
+						operacion.cuenta=JSON.parse(operacion.cuenta);
 						$scope.transaccion.operaciones.push(operacion);
+						//console.log(operacion);
 						$scope.operacion = {
-							id : -Math.random(),
+							id : null,
 							debe : 0.0,
 							haber : 0.0,
-							descripcion : ""
+							descripcion : "",
+							cuenta: null
 						};
 						$scope.sumarDebeHaber();
 					};
@@ -112,7 +115,7 @@ app
 					 */
 					$scope.eliminarOperacion = function(operacion) {
 						if (confirm("Desea eliminar la operación: "
-								+ operacion.descripcion)) {
+								+ cosigo +" - " +operacion.cuenta.nombre_cta)) {
 							var vecOpe = [];
 							for (var i = 0; i < $scope.transaccion.operaciones.length; i++) {
 								if ($scope.transaccion.operaciones[i].id !== operacion.id) {
@@ -142,11 +145,11 @@ app
 					 * Guarda un objeto transaccion
 					 */
 					$scope.guardarTransaccion = function() {
-						alert($scope.transaccion.fecha);
+						//alert($scope.transaccion.fecha);
 						$http(
 								{
 									url : 'api.php',
-									method : $scope.transaccion.id <= 0 ? "POST"
+									method : $scope.transaccion.id === null ? "POST"
 											: "PUT",
 									data : $scope.transaccion
 								}).then(

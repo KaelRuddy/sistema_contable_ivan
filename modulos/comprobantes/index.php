@@ -111,7 +111,7 @@
 							<div class="form-group">
 								<label class="control-label col-sm-1" for="glosa">Glosa:</label>
 								<div class="col-sm-11">
-									<input type="text" class="form-control" id="glosa"
+									<input type="text" class="form-control" id="glosa" ng-model="transaccion.glosa"
 										placeholder="Glosa del asiento">
 								</div>
 							</div>
@@ -129,8 +129,8 @@
 									</thead>
 									<tbody>
 										<tr data-ng-repeat="operacion in transaccion.operaciones">
-											<td>{{operacion.fk_cuenta}}</td>
-											<td>{{operacion.descripcion}}</td>
+											<td>{{operacion.cuenta.codigo}}</td>
+											<td>{{operacion.cuenta.nombre_cta}}</td>
 											<td>{{operacion.debe}}</td>
 											<td>{{operacion.haber}}</td>
 											<td>
@@ -140,18 +140,18 @@
 											</td>
 										</tr>
 										<tr>
-											<td>
+											<td colspan="2">
 												<div class="form-group col-sm-10">
 													<select class="form-control" id="sel1"
-														data-ng-model="operacion.fk_cuenta">
+														data-ng-model="operacion.cuenta">
 														<option selected></option>
 														<option data-ng-repeat="cuenta in cuentas"
-															value="{{cuenta.id}}">{{cuenta.codigo}}</option>
+															value="{{cuenta}}">{{cuenta.codigo}} - {{cuenta.nombre_cta}}</option>
 													</select>
 												</div>
 											</td>
-											<td><input type="text"
-												data-ng-model="operacion.descripcion" /></td>
+<!-- 											<td><input type="text" -->
+<!-- 												data-ng-model="operacion.descripcion" /></td> -->
 											<td><input type="text" data-ng-model="operacion.debe" /></td>
 											<td><input type="text" data-ng-model="operacion.haber" /></td>
 											<td>
@@ -161,10 +161,18 @@
 											</td>
 										</tr>
 										<tr>
-											<th colspan="2">TOTAL</th>
+											<th colspan="2">TOTAL DEBE</th>
 											<td>{{sumaDebe}}</td>
-											<td>{{sumaHaber}}</td>
 											<td></td>
+										</tr>
+										<tr>
+											<th colspan="2">TOTAL HABER</th>
+											<td></td>
+											<td>{{sumaHaber}}</td>
+										</tr>
+										<tr>
+											<th colspan="2">TOTAL DIFERENCIA</th>
+											<th colspan="2" style="text-align:center;">{{sumaHaber - sumaDebe}}</th>
 										</tr>
 									</tbody>
 								</table>
