@@ -41,9 +41,9 @@ switch ($method) {
 				$sig_nro_comprobante=$_GET["sig_nro_tipo_comprobante"];
 				$result["sig_nro_tipo_comprobante"]=R::getCell('SELECT max(nro_tipo_comprobante) FROM '.T_transacciones.' WHERE fk_tipo_transaccion = ?',[$sig_nro_comprobante])+1;
 			}else{
-				$cuentas = R::findAll(T_cuentas);
+				$cuentas = R::findAll(T_cuentas, 'tipo=?', ["S"]);
 				$result["cuentas"]=$cuentas;
-				$result["tipos_transaccion"]=R::findAll(T_tipos_transaccion);
+				$result["tipos_transaccion"]=R::find(T_tipos_transaccion);
 				$result["sig_nro_comprobante"]=R::getCell('SELECT max(nro_comprobante) FROM '.T_transacciones)+1;
 				$result["transacciones"]=R::findAll(T_transacciones);
 			}
@@ -57,7 +57,7 @@ switch ($method) {
 			$transaccion=R::dispense(T_transacciones);
 			$transaccion->nro_comprobante=$data["nro_comprobante"];
 			$transaccion->nro_tipo_comprobante=$data["nro_tipo_comprobante"];
-			$transaccion->fk_tipo_transaccion=$data["fk_tipo_transaccion"];
+			$transaccion->fk_tipo_transaccion=$data["tipo_transaccion"]["id"];
 			$transaccion->glosa=$data["glosa"];
 			$transaccion->fecha=$data["fecha"];
 			$id_transaccion=R::store($transaccion);
@@ -86,25 +86,59 @@ switch ($method) {
 		break;
 	case 'PUT':
 		// actualizar
-		$data = json_decode(file_get_contents('php://input'), true);
-		$usuario=Usuario::getUsuarioDeId($data["id"]);
-		$usuario->nombre=$data["nombre"];
-		$usuario->ci=$data["ci"];
-		$usuario->cel=$data["cel"];
-		$usuario->usuario=$data["usuario"];
-		$usuario->pass=$data["password"];
-		$usuario->tipo=$data["tipo"];
-		if ($usuario->guardar()){
+		try{
+			$data = json_decode(file_get_contents('php://input'), true);
+			$transaccion=R::findOne(T_transacciones, ' id = ? ',[$data["id"]]);
+			$transaccion->nro_comprobante=$data["nro_comprobante"];
+			$transaccion->nro_tipo_comprobante=$data["nro_tipo_comprobante"];
+			$transaccion->fk_tipo_transaccion=$data["tipo_transaccion"]["id"];
+			$transaccion->glosa=$data["glosa"];
+			//$transaccion->fecha=$data["fecha"];
+			$id_transaccion=R::store($transaccion);
+			$operaciones=$data["operaciones"];
+			foreach ($operaciones as $ope){
+				if($ope["id"]==null)
+					$operacion=R::dispense(T_operaciones);
+				else
+					$operacion=R::findOne(T_operaciones, ' id=? ',[$ope["id"]]);
+				$operacion->fk_cuenta=$ope["cuenta"]["id"];
+				//$operacion->descripcion=$ope["descripcion"];
+				$operacion->debe=$ope["debe"];
+				$operacion->haber=$ope["haber"];
+				$operacion->fk_transaccion=$id_transaccion;
+				$id=R::store($operacion);
+			}
 			http_response_code(200);
-			print json_encode($usuario);
-		}else{
+			$transaccion=R::load(T_transacciones,$id_transaccion);
+			$transaccion->operaciones=R::find( T_operaciones, ' fk_transaccion = ? ', [ $id_transaccion ] );
+			$respuesta["transaccion"]=$transaccion;
+		} catch (Exception $e) {
 			http_response_code(405);
-			$respuesta=array();
 			$respuesta["codigo"]=405;
-			$respuesta["mensaje"]="No se pudo guardar el usuario";
+			$respuesta["mensaje"]="No se pudo guardar la transaccion";
+			$respuesta["error"]=$e;
+		}finally{
 			print json_encode($respuesta);
 		}
-		break;
+// 		$data = json_decode(file_get_contents('php://input'), true);
+// 		$usuario=Usuario::getUsuarioDeId($data["id"]);
+// 		$usuario->nombre=$data["nombre"];
+// 		$usuario->ci=$data["ci"];
+// 		$usuario->cel=$data["cel"];
+// 		$usuario->usuario=$data["usuario"];
+// 		$usuario->pass=$data["password"];
+// 		$usuario->tipo=$data["tipo"];
+// 		if ($usuario->guardar()){
+// 			http_response_code(200);
+// 			print json_encode($usuario);
+// 		}else{
+// 			http_response_code(405);
+// 			$respuesta=array();
+// 			$respuesta["codigo"]=405;
+// 			$respuesta["mensaje"]="No se pudo guardar el usuario";
+// 			print json_encode($respuesta);
+// 		}
+// 		break;
 		break;
 	case 'HEAD':
 		do_something_with_head($request);

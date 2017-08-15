@@ -129,16 +129,33 @@ app
 					};
 
 					/**
-					 * Se prepara el usuario para editar
+					 * Se prepara la transaccion usuario para editar
 					 */
-					$scope.editarUsuario = function(idUsuario) {
-						$scope.tituloModal = "Editar usuario";
+					$scope.editarTransaccion = function(transaccion) {
+						$scope.tituloModal = "Editar Transaccion";
+						$scope.operacion = {
+								id :null,
+								debe : 0.0,
+								haber : 0.0,
+								cuenta : null
+							};
 						$http({
-							url : 'api.php?id=' + idUsuario,
+							url : 'api.php?transaccion=' + transaccion.id,
 							method : "GET",
 						}).then(function(response) {
-							$scope.usuario = response.data;
-							$('#editarUsuarioModal').modal('toggle');
+							$scope.transaccion = response.data.transaccion;
+							$http
+							.get("api.php")
+							.then(
+									function(response) {
+										$scope.cuentas = response.data.cuentas;
+										$scope.tipos_transaccion = response.data.tipos_transaccion;
+										$scope.transaccion.nro_comprobante = response.data.sig_nro_comprobante;
+										$scope.sumarDebeHaber();
+										$('#editarTransaccionModal').modal(
+												'toggle');
+									});
+							//$('#editarTransaccionModal').modal('toggle');
 						});
 					};
 					/**
@@ -146,6 +163,8 @@ app
 					 */
 					$scope.guardarTransaccion = function() {
 						//alert($scope.transaccion.fecha);
+						$scope.transaccion.tipo_transaccion=JSON.parse($scope.transaccion.tipo_transaccion);
+						console.log($scope.transaccion);
 						$http(
 								{
 									url : 'api.php',
@@ -155,7 +174,7 @@ app
 								}).then(
 								function(response) {
 									// alert(response.status);
-									// console.log(response);
+									console.log(response);
 									if (response.status === 201
 											|| response.status === 200) {
 										$('#editarTransaccionModal').modal(

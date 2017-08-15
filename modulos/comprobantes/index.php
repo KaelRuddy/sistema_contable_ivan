@@ -49,9 +49,9 @@
 					<button type="button" class="btn btn-default btn-xs"
 						data-ng-click="mostrarTransaccion(transaccion)">Mostrar</button>
 					<button type="button" class="btn btn-warning btn-xs"
-						data-ng-click="mostrarTransaccion(transaccion)">Editar</button>
-					<button type="button" class="btn btn-danger btn-xs"
-						data-ng-click="eliminarCuenta(cuenta)" disabled="disabled">Eliminar</button>
+						data-ng-click="editarTransaccion(transaccion)">Editar</button>
+<!-- 					<button type="button" class="btn btn-danger btn-xs" -->
+<!-- 						data-ng-click="eliminarCuenta(cuenta)" disabled="disabled">Eliminar</button> -->
 				</td>
 			</tr>
 		</table>
@@ -85,10 +85,10 @@
 								<div class="form-group col-sm-2">
 									<select class="form-control" id="tipo_c"
 										data-ng-change="actualizarNroTipoComprobante()"
-										data-ng-model="transaccion.fk_tipo_transaccion">
-										<option selected></option>
-										<option data-ng-repeat="tipo in tipos_transaccion"
-											value="{{tipo.id}}">{{tipo.tipo_transaccion}}</option>
+										data-ng-model="transaccion.tipo_transaccion">
+										<option></option>
+										<option data-ng-repeat="tipo_transaccion in tipos_transaccion"
+											value="{{tipo_transaccion}}">{{tipo_transaccion.tipo_transaccion}}</option>
 									</select>
 								</div>
 								<label class="control-label col-sm-2" for="fecha_c">FECHA:</label>
@@ -111,8 +111,8 @@
 							<div class="form-group">
 								<label class="control-label col-sm-1" for="glosa">Glosa:</label>
 								<div class="col-sm-11">
-									<input type="text" class="form-control" id="glosa" ng-model="transaccion.glosa"
-										placeholder="Glosa del asiento">
+									<input type="text" class="form-control" id="glosa"
+										ng-model="transaccion.glosa" placeholder="Glosa del asiento">
 								</div>
 							</div>
 							<div class="modal-heading">Detalle del comprobante</div>
@@ -146,12 +146,13 @@
 														data-ng-model="operacion.cuenta">
 														<option selected></option>
 														<option data-ng-repeat="cuenta in cuentas"
-															value="{{cuenta}}">{{cuenta.codigo}} - {{cuenta.nombre_cta}}</option>
+															value="{{cuenta}}">{{cuenta.codigo}} -
+															{{cuenta.nombre_cta}}</option>
 													</select>
 												</div>
 											</td>
-<!-- 											<td><input type="text" -->
-<!-- 												data-ng-model="operacion.descripcion" /></td> -->
+											<!-- 											<td><input type="text" -->
+											<!-- 												data-ng-model="operacion.descripcion" /></td> -->
 											<td><input type="text" data-ng-model="operacion.debe" /></td>
 											<td><input type="text" data-ng-model="operacion.haber" /></td>
 											<td>
@@ -161,18 +162,15 @@
 											</td>
 										</tr>
 										<tr>
-											<th colspan="2">TOTAL DEBE</th>
+											<th colspan="2">TOTAL</th>
 											<td>{{sumaDebe}}</td>
-											<td></td>
-										</tr>
-										<tr>
-											<th colspan="2">TOTAL HABER</th>
-											<td></td>
 											<td>{{sumaHaber}}</td>
+											<td></td>
 										</tr>
 										<tr>
 											<th colspan="2">TOTAL DIFERENCIA</th>
-											<th colspan="2" style="text-align:center;">{{sumaHaber - sumaDebe}}</th>
+											<th colspan="2" style="text-align: center;">{{sumaHaber
+												- sumaDebe}}</th>
 										</tr>
 									</tbody>
 								</table>
@@ -241,6 +239,11 @@
 												<td>{{sumaDebe}}</td>
 												<td>{{sumaHaber}}</td>
 												<td></td>
+											</tr>
+											<tr>
+												<th colspan="2">TOTAL DIFERENCIA</th>
+												<th colspan="2" style="text-align: center;">{{sumaHaber
+													- sumaDebe}}</th>
 											</tr>
 										</tbody>
 									</table>
