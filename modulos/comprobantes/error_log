@@ -1,0 +1,5 @@
+[15-Aug-2017 02:25:42 UTC] PHP Warning:  Illegal string offset 'id' in /home/jicc/public_html/SISTEMA_CONTABLE/modulos/comprobantes/api.php on line 67
+[15-Aug-2017 02:25:42 UTC] PHP Warning:  Illegal string offset 'id' in /home/jicc/public_html/SISTEMA_CONTABLE/modulos/comprobantes/api.php on line 67
+[15-Aug-2017 02:27:59 UTC] PHP Warning:  Illegal string offset 'id' in /home/jicc/public_html/SISTEMA_CONTABLE/modulos/comprobantes/api.php on line 67
+[15-Aug-2017 02:27:59 UTC] PHP Warning:  Illegal string offset 'id' in /home/jicc/public_html/SISTEMA_CONTABLE/modulos/comprobantes/api.php on line 67
+[15-Aug-2017 17:12:08 UTC] PHP Notice:  Undefined index: glosa in /home/jicc/public_html/SISTEMA_CONTABLE/modulos/comprobantes/api.php on line 61

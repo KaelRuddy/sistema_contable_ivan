@@ -18,14 +18,16 @@
 		<p/>
 		<table class="table">
 			<tr>
-				<th>ID</th><th>COD. PROD.</th><th>TIPO</th><th>DESCRIPCION</th><th>ORIGEN</th><th>PRECIO 1</th><th>PRECIO 2</th><th>PRECIO 3</th><th></th>
+				<th>ID</th><th>COD. PROD.</th><th>PRODUCTO</th><th>MARCA</th><th>MEDIDA</th><th>MODELO</th><th>DESCRIPCION</th><th>PRECIO 1</th><th>PRECIO 2</th><th>PRECIO 3</th><th></th>
 			</tr>
 			<tr data-ng-repeat="producto in productos">
 			    <td>{{ producto.id }}</td>
 			    <td>{{ producto.codigo_prod }}</td>
-			    <td>{{ producto.tipo_prod }}</td>
+			    <td>{{ producto.producto }}</td>
+			    <td>{{ producto.marca }}</td>
+			    <td>{{ producto.medida }}</td>
+			    <td>{{ producto.modelo }}</td>
 			    <td>{{ producto.descripcion }}</td>
-			    <td>{{ producto.origen }}</td>
 			    <td>{{ producto.precio1 }}</td>
 			    <td>{{ producto.precio2 }}</td>
 			    <td>{{ producto.precio3 }}</td>
@@ -55,21 +57,33 @@
 					    </div>
 					  </div>
 					  <div class="form-group">
-					    <label class="control-label col-sm-2" for="tipo_prod">Tipo:</label>
+					    <label class="control-label col-sm-2" for="producto">Producto:</label>
 					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="tipo_prod" placeholder="Tipo de Producto" data-ng-model="producto.tipo_prod">
+					      <input type="text" class="form-control" id="producto" placeholder="Tipo de Producto" data-ng-model="producto.producto">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="control-label col-sm-2" for="marca">Marca:</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="marca" placeholder="Marca de Producto" data-ng-model="producto.marca">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="control-label col-sm-2" for="medida">Medida:</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="medida" placeholder="Medida de Producto" data-ng-model="producto.medida">
+					    </div>
+					  </div>
+					  <div class="form-group">
+					    <label class="control-label col-sm-2" for="modelo">Modelo:</label>
+					    <div class="col-sm-10">
+					      <input type="text" class="form-control" id="modelo" placeholder="Modelo de Producto" data-ng-model="producto.modelo">
 					    </div>
 					  </div>
 					  <div class="form-group">
 					    <label class="control-label col-sm-2" for="descripcion">Descripcion:</label>
 					    <div class="col-sm-10">
 					      <input type="text" class="form-control" id="descripcion" placeholder="Nombre del producto" data-ng-model="producto.descripcion">
-					    </div>
-					  </div>
-					   <div class="form-group">
-					    <label class="control-label col-sm-2" for="origen">Origen:</label>
-					    <div class="col-sm-10">
-					      <input type="text" class="form-control" id="origen" placeholder="Origen del producto" data-ng-model="producto.origen">
 					    </div>
 					  </div>
 					  <div class="form-group">

@@ -1,16 +1,16 @@
-var app = angular.module('transaccionesApp', [ 'ui.bootstrap' ]);
+var app = angular.module('1transaccionesApp', [ 'ui.bootstrap' ]);
 app
 		.controller(
-				'transaccionesCtrl',
+				'1transaccionesCtrl',
 				function($scope, $http) {
 
-					$scope.cargarTransacciones = function(response) {
+					$scope.cargar1transacciones = function(response) {
 						$http.get("api.php").then(function(response) {
-							$scope.transacciones = response.data.transacciones;
+							$scope.1transacciones = response.data.1transacciones;
 						});
 					}
 
-					$scope.cargarTransacciones();
+					$scope.cargar1transacciones();
 
 					$scope.cargarDatos = function() {
 						$http
@@ -18,7 +18,7 @@ app
 								.then(
 										function(response) {
 											$scope.cuentas = response.data.cuentas;
-											$scope.tipos_transaccion = response.data.tipos_transaccion;
+											$scope.tipos_1transaccion = response.data.tipos_1transaccion;
 											$scope.comprobante.nro_comprobante = response.data.sig_nro_comprobante;
 										});
 					};
@@ -26,12 +26,12 @@ app
 					/**
 					 * Muestra una transacción
 					 * */
-					$scope.mostrarTransaccion = function(transaccion){
-						$http.get("api.php?transaccion="+transaccion.id).then(function(response) {
-							$scope.transaccion = response.data.transaccion;
-							$scope.tituloModal = "Transacción "+transaccion.nro_comprobante;
+					$scope.mostrar1transaccion = function(1transaccion){
+						$http.get("api.php?1transaccion="+1transaccion.id).then(function(response) {
+							$scope.1transaccion = response.data.1transaccion;
+							$scope.tituloModal = "Transacción "+1transaccion.nro_comprobante;
 							$scope.sumarDebeHaber();
-							$('#mostrarTransaccionModal').modal('toggle');
+							$('#mostrar1transaccionModal').modal('toggle');
 						});
 					}
 
@@ -44,26 +44,26 @@ app
 						$http
 								.get(
 										"api.php?sig_nro_tipo_comprobante="
-												+ $scope.transaccion.fk_tipo_transaccion)
+												+ $scope.1transaccion.fk_tipo_1transaccion)
 								.then(
 										function(response) {
-											$scope.transaccion.nro_tipo_comprobante = response.data.sig_nro_tipo_comprobante;
+											$scope.1transaccion.nro_tipo_comprobante = response.data.sig_nro_tipo_comprobante;
 										});
 					};
 
 					// $scope.comprobante={fecha: new Date()};
 
 					/**
-					 * Crear un nuevo objeto transaccion
+					 * Crear un nuevo objeto 1transaccion
 					 */
-					$scope.nuevaTransaccion = function() {
-						$scope.transaccion = {
+					$scope.nueva1transaccion = function() {
+						$scope.1transaccion = {
 							id : null,
 							nro_comprobante : null,
 							nro_tipo_comprobante : null,
-							operaciones : []
+							1operaciones : []
 						};
-						$scope.operacion = {
+						$scope.1operacion = {
 							id :null,
 							debe : 0.0,
 							haber : 0.0,
@@ -75,10 +75,10 @@ app
 								.then(
 										function(response) {
 											$scope.cuentas = response.data.cuentas;
-											$scope.tipos_transaccion = response.data.tipos_transaccion;
-											$scope.transaccion.nro_comprobante = response.data.sig_nro_comprobante;
+											$scope.tipos_1transaccion = response.data.tipos_1transaccion;
+											$scope.1transaccion.nro_comprobante = response.data.sig_nro_comprobante;
 											$scope.sumarDebeHaber();
-											$('#editarTransaccionModal').modal(
+											$('#editar1transaccionModal').modal(
 													'toggle');
 										});
 
@@ -87,20 +87,20 @@ app
 					$scope.sumarDebeHaber = function() {
 						$scope.sumaDebe = 0.0;
 						$scope.sumaHaber = 0.0;
-						for (var i = 0; i < $scope.transaccion.operaciones.length; i++) {
-							$scope.sumaDebe += parseFloat($scope.transaccion.operaciones[i].debe);
-							$scope.sumaHaber += parseFloat($scope.transaccion.operaciones[i].haber);
+						for (var i = 0; i < $scope.1transaccion.1operaciones.length; i++) {
+							$scope.sumaDebe += parseFloat($scope.1transaccion.1operaciones[i].debe);
+							$scope.sumaHaber += parseFloat($scope.1transaccion.1operaciones[i].haber);
 						}
 					};
 
 					/**
-					 * adiciona una operacion temporal a la transaccion
+					 * adiciona una 1operacion temporal a la 1transaccion
 					 */
-					$scope.adicionarOperacion = function(operacion) {
-						operacion.cuenta=JSON.parse(operacion.cuenta);
-						$scope.transaccion.operaciones.push(operacion);
-						//console.log(operacion);
-						$scope.operacion = {
+					$scope.adicionar1operacion = function(1operacion) {
+						1operacion.cuenta=JSON.parse(1operacion.cuenta);
+						$scope.1transaccion.1operaciones.push(1operacion);
+						//console.log(1operacion);
+						$scope.1operacion = {
 							id : null,
 							debe : 0.0,
 							haber : 0.0,
@@ -111,75 +111,75 @@ app
 					};
 
 					/**
-					 * eliminar una operacion temporal a la transaccion
+					 * eliminar una 1operacion temporal a la 1transaccion
 					 */
-					$scope.eliminarOperacion = function(operacion) {
+					$scope.eliminar1operacion = function(1operacion) {
 						if (confirm("Desea eliminar la operación: "
-								+operacion.cuenta.nombre_cta)) {
+								+1operacion.cuenta.nombre_cta)) {
 							var vecOpe = [];
-							for (var i = 0; i < $scope.transaccion.operaciones.length; i++) {
-								if ($scope.transaccion.operaciones[i].id !== operacion.id) {
+							for (var i = 0; i < $scope.1transaccion.1operaciones.length; i++) {
+								if ($scope.1transaccion.1operaciones[i].id !== 1operacion.id) {
 									vecOpe
-											.push($scope.transaccion.operaciones[i]);
+											.push($scope.1transaccion.1operaciones[i]);
 								}
 							}
-							$scope.transaccion.operaciones = vecOpe;
+							$scope.1transaccion.1operaciones = vecOpe;
 							$scope.sumarDebeHaber();
 						}
 					};
 
 					/**
-					 * Se prepara la transaccion usuario para editar
+					 * Se prepara la 1transaccion usuario para editar
 					 */
-					$scope.editarTransaccion = function(transaccion) {
-						$scope.tituloModal = "Editar Transaccion";
-						$scope.operacion = {
+					$scope.editar1transaccion = function(1transaccion) {
+						$scope.tituloModal = "Editar transaccion";
+						$scope.1operacion = {
 								id :null,
 								debe : 0.0,
 								haber : 0.0,
 								cuenta : null
 							};
 						$http({
-							url : 'api.php?transaccion=' + transaccion.id,
+							url : 'api.php?1transaccion=' + 1transaccion.id,
 							method : "GET",
 						}).then(function(response) {
-							$scope.transaccion = response.data.transaccion;
+							$scope.1transaccion = response.data.1transaccion;
 							$http
 							.get("api.php")
 							.then(
 									function(response) {
 										$scope.cuentas = response.data.cuentas;
-										$scope.tipos_transaccion = response.data.tipos_transaccion;
-										$scope.transaccion.nro_comprobante = response.data.sig_nro_comprobante;
+										$scope.tipos_1transaccion = response.data.tipos_1transaccion;
+										$scope.1transaccion.nro_comprobante = response.data.sig_nro_comprobante;
 										$scope.sumarDebeHaber();
-										$('#editarTransaccionModal').modal(
+										$('#editar1transaccionModal').modal(
 												'toggle');
 									});
-							//$('#editarTransaccionModal').modal('toggle');
+							//$('#editar1transaccionModal').modal('toggle');
 						});
 					};
 					/**
-					 * Guarda un objeto transaccion
+					 * Guarda un objeto 1transaccion
 					 */
-					$scope.guardarTransaccion = function() {
-						//alert($scope.transaccion.fecha);
-						$scope.transaccion.tipo_transaccion=JSON.parse($scope.transaccion.tipo_transaccion);
-						console.log($scope.transaccion);
+					$scope.guardar1transaccion = function() {
+						//alert($scope.1transaccion.fecha);
+						$scope.1transaccion.tipo_1transaccion=JSON.parse($scope.1transaccion.tipo_1transaccion);
+						console.log($scope.1transaccion);
 						$http(
 								{
 									url : 'api.php',
-									method : $scope.transaccion.id === null ? "POST"
+									method : $scope.1transaccion.id === null ? "POST"
 											: "PUT",
-									data : $scope.transaccion
+									data : $scope.1transaccion
 								}).then(
 								function(response) {
 									// alert(response.status);
 									console.log(response);
 									if (response.status === 201
 											|| response.status === 200) {
-										$('#editarTransaccionModal').modal(
+										$('#editar1transaccionModal').modal(
 												'toggle');
-										$scope.cargarTransacciones();
+										$scope.cargar1transacciones();
 									} else {
 										alert("Ocurrio un error");
 										console.log(response.data);

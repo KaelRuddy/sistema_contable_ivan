@@ -5,3 +5,4 @@
 [24-Jul-2017 13:25:29 UTC] PHP Notice:  Undefined index: cel in /home/jicc/public_html/SISTEMA_CONTABLE/modulos/usuarios/api.php on line 23
 [24-Jul-2017 13:25:38 UTC] PHP Notice:  Undefined index: password in /home/jicc/public_html/SISTEMA_CONTABLE/modulos/usuarios/api.php on line 45
 [24-Jul-2017 14:20:29 UTC] PHP Notice:  Undefined index: ci in /home/jicc/public_html/SISTEMA_CONTABLE/modulos/usuarios/api.php on line 22
+[27-Jul-2017 19:03:53 UTC] PHP Notice:  Undefined index: ci in /home/jicc/public_html/SISTEMA_CONTABLE/modulos/usuarios/api.php on line 23

@@ -115,7 +115,7 @@ app
 					 */
 					$scope.eliminarOperacion = function(operacion) {
 						if (confirm("Desea eliminar la operación: "
-								+operacion.cuenta.nombre_cta)) {
+								+ cosigo +" - " +operacion.cuenta.nombre_cta)) {
 							var vecOpe = [];
 							for (var i = 0; i < $scope.transaccion.operaciones.length; i++) {
 								if ($scope.transaccion.operaciones[i].id !== operacion.id) {

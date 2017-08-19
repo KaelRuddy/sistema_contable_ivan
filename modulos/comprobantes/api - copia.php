@@ -96,7 +96,6 @@ switch ($method) {
 			//$transaccion->fecha=$data["fecha"];
 			$id_transaccion=R::store($transaccion);
 			$operaciones=$data["operaciones"];
-			$operacionesantiguas=R::find( T_operaciones, ' fk_transaccion = ? ', [ $id_transaccion ] );
 			foreach ($operaciones as $ope){
 				if($ope["id"]==null)
 					$operacion=R::dispense(T_operaciones);
@@ -108,11 +107,6 @@ switch ($method) {
 				$operacion->haber=$ope["haber"];
 				$operacion->fk_transaccion=$id_transaccion;
 				$id=R::store($operacion);
-			}
-			//Borrando operaciones antiguas
-			foreach ($operacionesantiguas as $ope){
-				$operacion=R::findOne(T_operaciones, ' id=? ',[$ope["id"]]);
-				R::trash($operacion);
 			}
 			http_response_code(200);
 			$transaccion=R::load(T_transacciones,$id_transaccion);

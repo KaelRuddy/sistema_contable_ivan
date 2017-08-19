@@ -6,9 +6,11 @@ class Producto{
 	
 	public $id=-1;	// ID entero
 	public $codigo_prod="";	// NOMBRE cadena
-	public $tipo_prod="";	// CI
+	public $producto="";	// USUARIO
+	public $marca="";	// CI
+	public $medida="";	// CI
+	public $modelo="";	// CI
 	public $descripcion="";	// CEL
-	public $origen="";	// USUARIO
 	public $precio1="";	// USUARIO
 	public $precio2="";	// USUARIO
 	public $precio3="";	// USUARIO
@@ -21,9 +23,11 @@ class Producto{
 	function __construct() {
 		$this->id=-1;	// ID entero
 		$this->codigo_prod="";	// NOMBRE cadena
-		$this->tipo_prod="";	// CI
+		$this->producto="";	// CI
+		$this->marca="";	// USUARIO
+		$this->medida="";	// USUARIO
+		$this->modelo="";	// USUARIO
 		$this->descripcion="";	// CEL
-		$this->origen="";	// USUARIO
 		$this->precio1="";	// USUARIO
 		$this->precio2="";	// USUARIO
 		$this->precio3="";	// USUARIO
@@ -36,9 +40,9 @@ class Producto{
 	 * */
 	public function guardar(){
 		if($this->id==-1){	// es nuevo
-			$sql="insert into ".self::TABLA." (codigo_prod,tipo_prod,descripcion,origen,precio1,precio2,precio3) values('".$this->codigo_prod."','".$this->tipo_prod."','".$this->descripcion."','".$this->origen."','".$this->precio1."','".$this->precio2."','".$this->precio3."')";
+			$sql="insert into ".self::TABLA." (codigo_prod,producto,marca,medida,modelo,descripcion,precio1,precio2,precio3) values('".$this->codigo_prod."','".$this->producto."','".$this->marca."','".$this->medida."','".$this->modelo."','".$this->descripcion."','".$this->precio1."','".$this->precio2."','".$this->precio3."')";
 		}else{// actualizar
-			$sql="update ".self::TABLA." set codigo_prod='".$this->codigo_prod."',tipo_prod='".$this->tipo_prod."',descripcion='".$this->descripcion."',origen='".$this->origen."',precio1='".$this->precio1."',precio2='".$this->precio2."',precio3='".$this->precio3."' where id='".$this->id."'";
+			$sql="update ".self::TABLA." set codigo_prod='".$this->codigo_prod."',producto='".$this->producto."',marca='".$this->marca."',medida='".$this->medida."',modelo='".$this->modelo."',descripcion='".$this->descripcion."',precio1='".$this->precio1."',precio2='".$this->precio2."',precio3='".$this->precio3."' where id='".$this->id."'";
 		}
 		if(mysqli_query($this->conexion,$sql)){
 			if($this->id==-1){
@@ -99,9 +103,11 @@ class Producto{
 		$miProducto=new self();	// creamos un usuario con datos vacios
 		$miProducto->id=$fila["id"];	// los campos de la tabla
 		$miProducto->codigo_prod=$fila["codigo_prod"];
-		$miProducto->tipo_prod=$fila["tipo_prod"];
+		$miProducto->producto=$fila["producto"];
+		$miProducto->marca=$fila["marca"];
+		$miProducto->medida=$fila["medida"];
+		$miProducto->modelo=$fila["modelo"];
 		$miProducto->descripcion=$fila["descripcion"];
-		$miProducto->origen=$fila["origen"];
 		$miProducto->precio1=$fila["precio1"];
 		$miProducto->precio2=$fila["precio2"];
 		$miProducto->precio3=$fila["precio3"];
@@ -134,9 +140,11 @@ switch ($method) {
 		$data = json_decode(file_get_contents('php://input'), true);
 		$producto=new Producto();
 		$producto->codigo_prod=$data["codigo_prod"];
-		$producto->tipo_prod=$data["tipo_prod"];
+		$producto->producto=strtoupper($data["producto"]);
+		$producto->marca=$data["marca"];
+		$producto->medida=strtoupper($data["medida"]);
+		$producto->modelo=strtoupper($data["modelo"]);
 		$producto->descripcion=strtoupper($data["descripcion"]);
-		$producto->origen=strtoupper($data["origen"]);
 		$producto->precio1=$data["precio1"];
 		$producto->precio2=$data["precio2"];
 		$producto->precio3=$data["precio3"];
@@ -156,9 +164,11 @@ switch ($method) {
 		$data = json_decode(file_get_contents('php://input'), true);
 		$producto=Producto::getProductoDeId($data["id"]);
 		$producto->codigo_prod=$data["codigo_prod"];
-		$producto->tipo_prod=$data["tipo_prod"];
+		$producto->producto=strtoupper($data["producto"]);
+		$producto->marca=strtoupper($data["marca"]);
+		$producto->medida=strtoupper($data["medida"]);
+		$producto->modelo=$data["modelo"];
 		$producto->descripcion=strtoupper($data["descripcion"]);
-		$producto->origen=strtoupper($data["origen"]);
 		$producto->precio1=$data["precio1"];
 		$producto->precio2=$data["precio2"];
 		$producto->precio3=$data["precio3"];

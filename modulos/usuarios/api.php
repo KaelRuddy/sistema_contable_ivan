@@ -3,6 +3,7 @@ require 'Usuario.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $request = explode("/", substr(@$_SERVER['PATH_INFO'], 1));
+header("Content-Type: application/json; charset=UTF-8");
 
 switch ($method) {
 	case 'GET':
