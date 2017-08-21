@@ -23,7 +23,8 @@ switch ($method) {
 		$usuario->ci=$data["ci"];
 		$usuario->cel=$data["cel"];
 		$usuario->usuario=$data["usuario"];
-		$usuario->pass=$data["password"];
+		$clavehash = hash("SHA256",$data["password"]);
+		$usuario->pass=$clavehash;
 		$usuario->tipo=$data["tipo"];
 		if ($usuario->guardar()){
 			http_response_code(201);
@@ -44,7 +45,8 @@ switch ($method) {
 		$usuario->ci=$data["ci"];
 		$usuario->cel=$data["cel"];
 		$usuario->usuario=$data["usuario"];
-		$usuario->pass=$data["password"];
+		$clavehash = hash("SHA256",$data["password"]);
+		$usuario->pass=$clavehash;
 		$usuario->tipo=$data["tipo"];
 		if ($usuario->guardar()){
 			http_response_code(200);
